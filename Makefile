@@ -1,4 +1,5 @@
-VERSION := `git describe --tags`
+VERSION := "0.5.4"
+# VERSION := `git describe --tags`
 PACKAGE := mssql_exporter-$(VERSION).linux-amd64
 
 package: 
@@ -6,6 +7,8 @@ package:
 	rm -rf $(PACKAGE)
 	mkdir $(PACKAGE) 
 	cp -fva mssql_exporter-0.5.4/src/server/bin/linux_x64/mssql_exporter $(PACKAGE)/
+	#cp -fva mssql_exporter-0.5.4/src/server/bin/linux_x64/metrics.json $(PACKAGE)/
+	cp -fva metrics.json $(PACKAGE)/
 	tar -czvpf $(PACKAGE).tar.gz $(PACKAGE)
 
 clean:
