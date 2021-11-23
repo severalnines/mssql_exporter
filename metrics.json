@@ -32,14 +32,144 @@
                 }
             ]
         },
-	{
-            "Name": "mssql_transactions",
-            "Query": "SELECT cntr_value FROM sys.dm_os_performance_counters where counter_name = 'Transactions/sec' AND instance_name = '_Total'",
-            "Description": "Transactions/sec",
+        {
+            "Name": "mssql_userconnections",
+            "Query": "SELECT cntr_value FROM sys.dm_os_performance_counters WHERE counter_name ='User Connections'",
+            "Description": "Counts the number of users currently connected to SQL Server",
             "Columns": [
                 {
                     "Name": "cntr_value",
-                    "Label": "mssql_transactions",
+                    "Label": "mssql_userconnections",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_batchrequestpersecond",
+            "Query": "SELECT cntr_value FROM sys.dm_os_performance_counters WHERE counter_name ='Batch Requests/sec'",
+            "Description": "Number of Transact-SQL command batches received per second",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_batchrequestpersecond",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_PLE",
+            "Query": "SELECT cntr_value FROM sys.dm_os_performance_counters WHERE counter_name ='Page life expectancy' AND object_name LIKE '%buffer manager%'",
+            "Description": "Indicates the minimum number of seconds a page will stay in the buffer pool on this node without references.",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_PLE",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_blockedprocesses",
+            "Query": "SELECT cntr_value FROM sys.dm_os_performance_counters WHERE counter_name ='Processes blocked'",
+            "Description": "Number of currently blocked processes",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_blockedprocesses",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_buffercacheitration",
+            "Query": "SELECT cntr_value FROM sys.dm_os_performance_counters WHERE counter_name ='Buffer cache hit ratio'",
+            "Description": "Indicates the percentage of pages found in the buffer cache without having to read from disk",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_buffercacheitration",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_pagereadspersecond",
+            "Query": "SELECT cntr_value FROM sys.dm_os_performance_counters WHERE counter_name ='Page reads/sec'",
+            "Description": "Indicates the number of physical database page reads that are issued per second",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_pagereadspersecond",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_pagewritespersecond",
+            "Query": "SELECT cntr_value FROM sys.dm_os_performance_counters WHERE counter_name ='Page writes/sec'",
+            "Description": "Indicates the number of physical database page writes that are issued per second.",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_pagewritespersecond",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_logspaceused",
+            "Query": "select cntr_value from sys.dm_os_performance_counters where Object_name = 'SQLServer:Databases'  and counter_name = 'Percent Log Used'   and instance_name NOT IN ('_Total', 'mssqlsystemresource') order by   cntr_value desc'",
+            "Description": "Percentage of space in the log that is in use",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_logspaceused",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_totalmemoryKB",
+            "Query": "select cntr_value from sys.dm_os_performance_counters where Object_name = 'SQLServer:Memory Manager' and counter_name = 'Total Server Memory (KB)'",
+            "Description": "Specifies the amount of memory the server has committed using the memory manager.",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_totalmemoryKB",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_targtmemoryKB",
+            "Query": "select cntr_value from sys.dm_os_performance_counters where Object_name = 'SQLServer:Memory Manager' and counter_name = 'Target Server Memory (KB)'",
+            "Description": "Indicates the ideal amount of memory the server can consume.",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_targtmemoryKB",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_targtmemoryKB",
+            "Query": "select cntr_value from sys.dm_os_performance_counters where Object_name = 'SQLServer:Memory Manager' and counter_name = 'Target Server Memory (KB)'",
+            "Description": "Indicates the ideal amount of memory the server can consume.",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_targtmemoryKB",
                     "Usage": "Gauge",
                     "DefaultValue": 0
                 }
