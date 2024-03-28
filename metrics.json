@@ -369,7 +369,7 @@
             ]
         },
         {
-            "Name": "mssql_io_queued_read_stall",
+            "Name": "mssql_io_queued_write_stall",
             "Query": "SELECT cast(DB_Name(a.database_id) as varchar) as name,max(io_stall_queued_write_ms) as writeQueuedIO FROM sys.dm_io_virtual_file_stats(null, null) a INNER JOIN sys.master_files b ON a.database_id = b.database_id and a.file_id = b.file_id group by a.database_id",
             "Description": "Wait time (ms) of stall since last restart",
             "Usage": "GaugesWithLabels",
