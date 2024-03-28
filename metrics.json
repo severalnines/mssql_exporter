@@ -187,6 +187,279 @@
                     "DefaultValue": 0
                 }
             ]
+        },
+        {
+            "Name": "mssql_kill_connection_errors",
+            "Query": "SELECT cntr_value FROM sys.dm_os_performance_counters where counter_name = 'Errors/sec' AND instance_name = 'Kill Connection Errors'",
+            "Description": "Number of kill connection errors/sec since last restart",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_kill_connection_errors",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_page_fault_count",
+            "Query": "SELECT page_fault_count from sys.dm_os_process_memory",
+            "Description": "Number of page faults since last restart",
+            "Columns": [
+                {
+                    "Name": "page_fault_count",
+                    "Label": "mssql_page_fault_count",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_memory_utilization_percentage",
+            "Query": "SELECT memory_utilization_percentage from sys.dm_os_process_memory",
+            "Description": "Number of page faults since last restart",
+            "Columns": [
+                {
+                    "Name": "memory_utilization_percentage",
+                    "Label": "mssql_memory_utilization_percentage",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_total_physical_memory_kb",
+            "Query": "SELECT total_physical_memory_kb from sys.dm_os_sys_memory",
+            "Description": "Total physical memory in KB",
+            "Columns": [
+                {
+                    "Name": "total_physical_memory_kb",
+                    "Label": "mssql_total_physical_memory_kb",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_available_physical_memory_kb",
+            "Query": "SELECT available_physical_memory_kb from sys.dm_os_sys_memory",
+            "Description": "Available physical memory in KB",
+            "Columns": [
+                {
+                    "Name": "available_physical_memory_kb",
+                    "Label": "mssql_available_physical_memory_kb",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_total_page_file_kb",
+            "Query": "SELECT total_page_file_kb from sys.dm_os_sys_memory",
+            "Description": "Total page file in KB",
+            "Columns": [
+                {
+                    "Name": "total_page_file_kb",
+                    "Label": "mssql_total_page_file_kb",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_available_page_file_kb",
+            "Query": "SELECT available_page_file_kb from sys.dm_os_sys_memory",
+            "Description": "Available page file in KB",
+            "Columns": [
+                {
+                    "Name": "available_page_file_kb",
+                    "Label": "mssql_available_page_file_kb",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_connections",
+            "Query": "SELECT DB_NAME(sP.dbid) db_name,COUNT(sP.spid) count FROM sys.sysprocesses sP GROUP BY DB_NAME(sP.dbid)",
+            "Description": "Number of active connections",
+            "Usage": "GaugesWithLabels",
+            "Columns": [
+                {
+                    "Name": "db_name",
+                    "Label": "db_name",
+                    "Usage": "GaugeLabel",
+                    "Order": 0
+                },
+                {
+                    "Name": "count",
+                    "Label": "count",
+                    "Usage": "Gauge"
+                }
+            ]
+        },
+        {
+            "Name": "mssql_user_errors",
+            "Query": "SELECT cntr_value FROM sys.dm_os_performance_counters where counter_name = 'Errors/sec' AND instance_name = 'User Errors'",
+            "Description": "Number of user errors/sec since last restart",
+            "Columns": [
+                {
+                    "Name": "cntr_value",
+                    "Label": "mssql_user_errors",
+                    "Usage": "Gauge",
+                    "DefaultValue": 0
+                }
+            ]
+        },
+        {
+            "Name": "mssql_io_read_stall",
+            "Query": "SELECT cast(DB_Name(a.database_id) as varchar) as name,max(io_stall_read_ms) as readIO FROM sys.dm_io_virtual_file_stats(null, null) a INNER JOIN sys.master_files b ON a.database_id = b.database_id and a.file_id = b.file_id group by a.database_id",
+            "Description": "Wait time (ms) of stall since last restart",
+            "Usage": "GaugesWithLabels",
+            "Columns": [
+                {
+                    "Name": "name",
+                    "Label": "name",
+                    "Usage": "GaugeLabel",
+                    "Order": 0
+                },
+                {
+                    "Name": "readIO",
+                    "Label": "readIO",
+                    "Usage": "Gauge"
+                }
+            ]
+        },
+        {
+            "Name": "mssql_io_write_stall",
+            "Query": "SELECT cast(DB_Name(a.database_id) as varchar) as name,max(io_stall_write_ms) as writeIO FROM sys.dm_io_virtual_file_stats(null, null) a INNER JOIN sys.master_files b ON a.database_id = b.database_id and a.file_id = b.file_id group by a.database_id",
+            "Description": "Wait time (ms) of stall since last restart",
+            "Usage": "GaugesWithLabels",
+            "Columns": [
+                {
+                    "Name": "name",
+                    "Label": "name",
+                    "Usage": "GaugeLabel",
+                    "Order": 0
+                },
+                {
+                    "Name": "writeIO",
+                    "Label": "writeIO",
+                    "Usage": "Gauge"
+                }
+            ]
+        },
+        {
+            "Name": "mssql_io_queued_read_stall",
+            "Query": "SELECT cast(DB_Name(a.database_id) as varchar) as name,max(io_stall_queued_read_ms) as readQueuedIO FROM sys.dm_io_virtual_file_stats(null, null) a INNER JOIN sys.master_files b ON a.database_id = b.database_id and a.file_id = b.file_id group by a.database_id",
+            "Description": "Wait time (ms) of stall since last restart",
+            "Usage": "GaugesWithLabels",
+            "Columns": [
+                {
+                    "Name": "name",
+                    "Label": "name",
+                    "Usage": "GaugeLabel",
+                    "Order": 0
+                },
+                {
+                    "Name": "readQueuedIO",
+                    "Label": "readQueuedIO",
+                    "Usage": "Gauge"
+                }
+            ]
+        },
+        {
+            "Name": "mssql_io_queued_read_stall",
+            "Query": "SELECT cast(DB_Name(a.database_id) as varchar) as name,max(io_stall_queued_write_ms) as writeQueuedIO FROM sys.dm_io_virtual_file_stats(null, null) a INNER JOIN sys.master_files b ON a.database_id = b.database_id and a.file_id = b.file_id group by a.database_id",
+            "Description": "Wait time (ms) of stall since last restart",
+            "Usage": "GaugesWithLabels",
+            "Columns": [
+                {
+                    "Name": "name",
+                    "Label": "name",
+                    "Usage": "GaugeLabel",
+                    "Order": 0
+                },
+                {
+                    "Name": "writeQueuedIO",
+                    "Label": "writeQueuedIO",
+                    "Usage": "Gauge"
+                }
+            ]
+        },
+        {
+            "Name": "mssql_io_stall_total",
+            "Query": "SELECT cast(DB_Name(a.database_id) as varchar) as name,max(io_stall) as totalStall FROM sys.dm_io_virtual_file_stats(null, null) a INNER JOIN sys.master_files b ON a.database_id = b.database_id and a.file_id = b.file_id group by a.database_id",
+            "Description": "Wait time (ms) of stall since last restart",
+            "Usage": "GaugesWithLabels",
+            "Columns": [
+                {
+                    "Name": "name",
+                    "Label": "name",
+                    "Usage": "GaugeLabel",
+                    "Order": 0
+                },
+                {
+                    "Name": "totalStall",
+                    "Label": "totalStall",
+                    "Usage": "Gauge"
+                }
+            ]
+        },
+        {
+            "Name": "mssql_system_info",
+            "Query": "SELECT SERVERPROPERTY('MachineName') AS MachineName , SERVERPROPERTY('ServerName') AS ServerName , SERVERPROPERTY('Edition') AS Edition , SERVERPROPERTY('Collation') AS Collation , SERVERPROPERTY('InstanceDefaultDataPath') AS InstanceDefaultDataPath , SERVERPROPERTY('InstanceDefaultLogPath') AS InstanceDefaultLogPath , SERVERPROPERTY('ProductVersion') AS ProductVersion , 1 AS Value",
+            "Description": "Software Information about the SQL Instance",
+            "Usage": "GaugesWithLabels",
+            "Columns": [
+                {
+                    "Name": "MachineName",
+                    "Label": "MachineName",
+                    "Usage": "GaugeLabel",
+                    "Order": 0
+                },
+                {
+                    "Name": "ServerName",
+                    "Label": "ServerName",
+                    "Usage": "GaugeLabel",
+                    "Order": 1
+                },
+                {
+                    "Name": "Edition",
+                    "Label": "Edition",
+                    "Usage": "GaugeLabel",
+                    "Order": 2
+                },
+                {
+                    "Name": "Collation",
+                    "Label": "Collation",
+                    "Usage": "GaugeLabel",
+                    "Order": 3
+                },
+                {
+                    "Name": "InstanceDefaultDataPath",
+                    "Label": "InstanceDefaultDataPath",
+                    "Usage": "GaugeLabel",
+                    "Order": 4
+                },
+                {
+                    "Name": "InstanceDefaultLogPath",
+                    "Label": "InstanceDefaultLogPath",
+                    "Usage": "GaugeLabel",
+                    "Order": 5
+                },
+                {
+                    "Name": "ProductVersion",
+                    "Label": "ProductVersion",
+                    "Usage": "GaugeLabel",
+                    "Order": 6
+                },
+                {
+                    "Name": "Value",
+                    "Label": "Value",
+                    "Usage": "Gauge"
+                }
+            ]
         }
     ],
     "MillisecondTimeout": 4000
